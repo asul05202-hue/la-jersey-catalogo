@@ -1984,6 +1984,16 @@ function renderSources() {
   }).join('');
 }
 
+window.__loginFallback = function() {
+  const phone = (document.getElementById("login-phone").value || "").replace(/\D/g, "");
+  const pass = document.getElementById("login-pass").value || "";
+  const err = document.getElementById("login-error");
+  if ((phone === ADMIN_PHONE || phone === ADMIN_PHONE_OLD) && pass === ADMIN_PASS) {
+    const user = {id: Date.now(), name: ADMIN_NAME, phone: phone, datetime: new Date().toISOString(), lastLogin: new Date().toISOString(), logins: 1};
+    try { saveUsers([user].concat(loadUsers().filter(u => u.phone !== phone))); } catch(e) {}
+    finishLogin(user);
+  } else { err.textContent = phone.length < 7 ? "Número de teléfono no válido." : "Revisa tu número y contraseña."; }
+};
 initApp();
 </script>
 </body>
