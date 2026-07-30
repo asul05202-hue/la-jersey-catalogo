@@ -2008,5 +2008,11 @@ setTimeout(function(){
   }
 }, 250);
 </script>
+<script>
+(function(){
+ function forceCatalog(){try{var grid=document.getElementById('products-grid'),list=document.getElementById('cat-list'),count=document.getElementById('product-count');if(!grid||typeof CATALOG_SEED==='undefined')return;var ps=CATALOG_SEED;if(count)count.textContent=ps.length+' productos';if(list){var cats=[...new Set(ps.map(function(p){return p.category;}))].sort();list.innerHTML='<div class="cat-item active"><span>Todos</span><span class="cat-badge">'+ps.length+'</span></div>'+cats.map(function(c){return '<div class="cat-item"><span>'+c+'</span><span class="cat-badge">'+ps.filter(function(p){return p.category===c;}).length+'</span></div>';}).join('');}grid.innerHTML=ps.slice(0,48).map(function(p){return '<div class="product-card"><div class="product-img-wrap"><div class="img-placeholder">⚽</div><img class="product-img loaded" src="'+p.image+'" alt="'+String(p.name).replace(/"/g,'&quot;')+'"></div><div class="product-info"><div class="product-cat-tag">'+p.category+'</div><div class="product-name">'+p.name+'</div><div class="product-price empty">Consultar precio</div></div></div>';}).join('');}catch(e){console.log(e);}}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',forceCatalog);else forceCatalog();setTimeout(forceCatalog,500);
+})();
+</script>
 </body>
 </html>
