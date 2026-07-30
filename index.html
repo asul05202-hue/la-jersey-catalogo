@@ -1998,6 +1998,13 @@ window.__loginFallback = function() {
   } else { err.textContent = phone.length < 7 ? "Número de teléfono no válido." : "Revisa tu número y contraseña."; }
 };
 initApp();
+setTimeout(function(){
+  if (!state.products || state.products.length === 0) {
+    state.products = CATALOG_SEED.slice();
+    state.categories = loadCategories(state.products);
+    applyFilters();
+  }
+}, 250);
 </script>
 </body>
 </html>
