@@ -1070,6 +1070,8 @@ function logout() {
 // ═══════════════════════════════════════════════════════
 function initApp() {
   state.products = loadProducts();
+  // Si el navegador tiene datos antiguos dañados, usar siempre el catálogo embebido.
+  if (!Array.isArray(state.products) || state.products.length < 100) state.products = CATALOG_SEED.slice();
   state.categories = loadCategories(state.products);
   renderSidebar();
   applyFilters();
